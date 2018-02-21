@@ -1,0 +1,34 @@
+{
+    "name": "silvertouchltd/cake-silver-cms",
+    "description": "CakePHP CMS plugin",
+    "type": "cakephp-plugin",
+    "keywords": ["cakephp", "cms", "plugin"],
+    "homepage": "git url",
+    "type": "cakephp-plugin",
+    "license": "MIT",
+    "authors": [
+    {
+      "name": "J Ajay",
+      "email": "ajay.jagad@silvertouch.com",
+      "homepage": "https://www.silvertouch.com/",
+      "role": "Author"
+    }
+  ],
+    "require": {
+        "cakephp/cakephp": "^3.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7|^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "CakeSilverCms\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CakeSilverCms\\Test\\": "tests",
+            "Cake\\Test\\": "./vendor/cakephp/cakephp/tests"
+        }
+    }
+}
