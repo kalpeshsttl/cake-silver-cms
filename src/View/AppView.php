@@ -13,7 +13,7 @@
  */
 namespace CakeSilverCms\View;
 
-use \App\View\AppView;
+use \App\View\AppView as BaseAppView;
 use \Cake\Core\App;
 
 /**
@@ -23,7 +23,7 @@ use \Cake\Core\App;
  *
  * @link https://book.cakephp.org/3.0/en/views.html#the-app-view
  */
-class AppView extends AppView
+class AppView extends BaseAppView
 {
 
     /**
