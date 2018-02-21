@@ -4,6 +4,7 @@
   "type": "cakephp-plugin",
   "keywords": ["cakephp", "cms", "plugin"],
   "homepage": "https://github.com/silvertouchltd/cake-silver-cms",
+  "minimum-stability":"dev",
   "license": "MIT",
   "authors": [
     {
