@@ -2,7 +2,7 @@
   "name": "silvertouchltd/cake-silver-cms",
   "description": "CakePHP CMS plugin",
   "type": "cakephp-plugin",
-  "keywords": ["cakephp", "cms", "plugin"],
+  "keywords": ["cakephp", "cms", "plugin", "cmsplugin"],
   "homepage": "https://github.com/silvertouchltd/cake-silver-cms",
   "minimum-stability":"dev",
   "license": "MIT",
