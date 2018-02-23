@@ -5,6 +5,7 @@
  */
 use Cake\Routing\Router;
 
+$this->assign('title',__('Articles'));
 $this->Html->addCrumb(__('Articles'));
 ?>
 <div class="article index">
@@ -15,7 +16,7 @@ $this->Html->addCrumb(__('Articles'));
                 <?=$this->Html->link(
                     __('Add New Article'),
                     ['action' => 'add'],
-                    ['class' => 'btn btn-sm btn-outline-dark']
+                    ['class' => 'btn btn-sm btn-outline-dark', 'title' => __('Add New Article')]
                 );?>
             </div>
         </div>
@@ -58,7 +59,7 @@ $this->Html->addCrumb(__('Articles'));
                         <?php /*<td><?=h($article->created_at)?></td>*/?>
                         <?php /*<td><?=h($article->modified_at)?></td>*/?>
                         <td class="actions">
-                            <?=$this->Html->link('<i class="fas fa-eye"></i>', ['action' => 'view', $article->id], ['class' => 'btn btn-sm btn-outline-dark', 'title' => __('View'), 'escape' => false])?>
+                            <?= '';//$this->Html->link('<i class="fas fa-eye"></i>', ['action' => 'view', $article->id], ['class' => 'btn btn-sm btn-outline-dark', 'title' => __('View'), 'escape' => false])?>
                             <?=$this->Html->link('<i class="far fa-edit"></i>', ['action' => 'edit', $article->id], ['class' => 'btn btn-sm btn-outline-dark', 'title' => __('Edit'), 'escape' => false])?>
                             <?=$this->Form->postLink('<i class="far fa-trash-alt"></i>', ['action' => 'delete', $article->id], ['confirm' => __('Are you sure you want to delete this Article?', $article->id), 'class' => 'btn btn-sm btn-outline-danger', 'title' => __('Delete'), 'escape' => false])?>
                         </td>

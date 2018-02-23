@@ -39,6 +39,7 @@ class AppView extends BaseAppView
     {
         parent::initialize();
         $this->loadHelper('CakeSilverCms.Form');
+        $this->loadHelper('CakeSilverCms.Menu');
         $this->loadHelper('Paginator', ['templates' => 'CakeSilverCms.templates/paginator']);
     }
 }

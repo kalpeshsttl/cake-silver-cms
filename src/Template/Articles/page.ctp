@@ -12,7 +12,7 @@ $this->assign('title',$article->title);
             <h1 class="h5 d-inline"><?= __('Article ( ' . $article->title . ' ) ') ?></h1>
         </div>
         <div class="card-body p-0">
-            <?= $article->content; ?>
+        	<?= $article->content; ?>
         </div>
     </div>
 </div>

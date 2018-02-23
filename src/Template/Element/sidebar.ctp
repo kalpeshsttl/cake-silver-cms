@@ -21,12 +21,35 @@ $action     = $this->request->params['action'];
 				<ul class="nav flex-column pl-3">
 					<li class="nav-item">
 						<?=$this->Html->link(
-						    '<i class="far fa-edit"></i> ' . __('Create New Article'),
+						    '<i class="far fa-edit"></i> ' . __('Add New Article'),
 						    ['controller' => 'Articles', 'action' => 'add'],
 						    ['class' => 'nav-link ' . ((preg_match('/Articles/', $controller) && preg_match('/add/', $action)) ? 'active' : ''), 'escape' => false]
 						);?>
 					</li>
 				</ul>
+			</li>
+			<li class="nav-item">
+				<?=$this->Html->link(
+				    '<i class="fas fa-bars"></i> ' . __('Menus'),
+				    ['controller' => 'MenuRegions', 'action' => 'index'],
+				    ['class' => 'nav-link ' . ((preg_match('/MenuRegions|Menus/', $controller)) ? 'active' : ''), 'escape' => false]
+				);?>
+				<?php /*<ul class="nav flex-column pl-3">
+					<li class="nav-item">
+						<?=$this->Html->link(
+						    '<i class="fas fa-plus"></i> ' . __('Create New Menu Location'),
+						    ['controller' => 'MenuRegions', 'action' => 'add'],
+						    ['class' => 'nav-link ' . ((preg_match('/MenuRegions/', $controller) && preg_match('/add/', $action)) ? 'active' : ''), 'escape' => false]
+						);?>
+					</li>
+					<li class="nav-item">
+						<?=$this->Html->link(
+						    '<i class="fas fa-plus"></i> ' . __('Add New Menu'),
+						    ['controller' => 'Menus', 'action' => 'add'],
+						    ['class' => 'nav-link ' . ((preg_match('/Menus/', $controller) && preg_match('/add/', $action)) ? 'active' : ''), 'escape' => false]
+						);?>
+					</li>
+				</ul>*/ ?>
 			</li>
 		</ul>
 	</div>

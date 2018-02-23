@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \Cake\Datasource\EntityInterface $article
  */
+$this->assign('title',__('Add New Article'));
 $this->Html->addCrumb(__('Articles'),['action'=>'index']);
 $this->Html->addCrumb(__('Add New Article'));
 ?>

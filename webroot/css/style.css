@@ -108,6 +108,9 @@ thead tr th a {
 .border-bottom {
     border-bottom: 1px solid #e5e5e5;
 }
+.dropdown-menu {
+    z-index: 9999;
+}
 /* checkbox and radio style */
 
 .form-check-inline .form-check-input {

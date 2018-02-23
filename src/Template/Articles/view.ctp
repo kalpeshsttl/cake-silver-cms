@@ -3,6 +3,9 @@
  * @var \App\View\AppView $this
  * @var \Cake\Datasource\EntityInterface $article
  */
+use Cake\Routing\Router;
+
+$this->assign('title',__('Article ( ' . $article->title . ' ) '));
 $this->Html->addCrumb(__('Articles'),['action'=>'index']);
 $this->Html->addCrumb(__('Article ( ' . $article->title . ' ) '));
 ?>
@@ -25,26 +28,34 @@ $this->Html->addCrumb(__('Article ( ' . $article->title . ' ) '));
         </div>
         <div class="card-body p-0">
             <dl class="row">
-                <dt class="col-sm-3 col-lg-2 mb-1"><?= __('Slug') ?></dt>
-                <dd class="col-sm-9 col-lg-10 mb-1"><?= h($article->slug) ?></dd>
-                <dt class="col-sm-3 col-lg-2 mb-1"><?= __('Url') ?></dt>
-                <dd class="col-sm-9 col-lg-10 mb-1"><?= h($article->url) ?></dd>
-                <dt class="col-sm-3 col-lg-2 mb-1"><?= __('Id') ?></dt>
+                <dt class="col-sm-3 col-lg-2 mb-1"><?= __('#ID') ?></dt>
                 <dd class="col-sm-9 col-lg-10 mb-1"><?= $this->Number->format($article->id) ?></dd>
-                <dt class="col-sm-3 col-lg-2 mb-1"><?= __('Sort Order') ?></dt>
+                <dt class="col-sm-3 col-lg-2 mb-1"><?= __('Title') ?></dt>
+                <dd class="col-sm-9 col-lg-10 mb-1"><?= $this->Text->autoParagraph(h($article->title)); ?></dd>
+                <?php /*<dt class="col-sm-3 col-lg-2 mb-1"><?= __('Excerpt') ?></dt>
+                <dd class="col-sm-9 col-lg-10 mb-1"><?= $this->Text->autoParagraph(h($article->excerpt)); ?></dd>*/ ?>
+                <dt class="col-sm-3 col-lg-2 mb-1"><?= __('Content') ?></dt>
+                <dd class="col-sm-9 col-lg-10 mb-1"><?= $this->Text->autoParagraph($article->content); ?></dd>
+                <?php /*<dt class="col-sm-3 col-lg-2 mb-1"><?= __('Slug') ?></dt>
+                <dd class="col-sm-9 col-lg-10 mb-1"><?= h($article->slug) ?></dd>*/ ?>
+                <dt class="col-sm-3 col-lg-2 mb-1"><?= __('Url') ?></dt>
+                <?php
+                $link = '';
+                if (!empty($article->url)):
+                    $link = Router::url(['action' => 'page', 'id' => $article->id], ['pass' => ['id'], '_full' => true]);
+                else:
+                    $link = Router::url('/page/' . $article->id, ['_full' => true]);
+                endif;
+                ?>
+                <dd class="col-sm-9 col-lg-10 mb-1"><?=$this->Html->link($link, $link, ['target' => '_blank']);?></dd>                
+                <?php /*<dt class="col-sm-3 col-lg-2 mb-1"><?= __('Sort Order') ?></dt>
                 <dd class="col-sm-9 col-lg-10 mb-1"><?= $this->Number->format($article->sort_order) ?></dd>
                 <dt class="col-sm-3 col-lg-2 mb-1"><?= __('Created At') ?></dt>
                 <dd class="col-sm-9 col-lg-10 mb-1"><?= h($article->created_at) ?></dd>
                 <dt class="col-sm-3 col-lg-2 mb-1"><?= __('Modified At') ?></dt>
-                <dd class="col-sm-9 col-lg-10 mb-1"><?= h($article->modified_at) ?></dd>
+                <dd class="col-sm-9 col-lg-10 mb-1"><?= h($article->modified_at) ?></dd>*/ ?>
                 <dt class="col-sm-3 col-lg-2 mb-1"><?= __('Status') ?></dt>
-                <dd class="col-sm-9 col-lg-10 mb-1"><?= $article->status ? __('Yes') : __('No'); ?></dd>
-                <dt class="col-sm-3 col-lg-2 mb-1"><?= __('Title') ?></dt>
-                <dd class="col-sm-9 col-lg-10 mb-1"><?= $this->Text->autoParagraph(h($article->title)); ?></dd>
-                <dt class="col-sm-3 col-lg-2 mb-1"><?= __('Excerpt') ?></dt>
-                <dd class="col-sm-9 col-lg-10 mb-1"><?= $this->Text->autoParagraph(h($article->excerpt)); ?></dd>
-                <dt class="col-sm-3 col-lg-2 mb-1"><?= __('Content') ?></dt>
-                <dd class="col-sm-9 col-lg-10 mb-1"><?= $this->Text->autoParagraph(h($article->content)); ?></dd>
+                <dd class="col-sm-9 col-lg-10 mb-1"><?= ($article->status == 1) ? __('Active') : __('Inactive'); ?></dd>                
             </dl>
         </div>
     </div>
