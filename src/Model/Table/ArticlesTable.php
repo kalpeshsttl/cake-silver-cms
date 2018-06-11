@@ -1,14 +1,15 @@
 <?php
 namespace CakeSilverCms\Model\Table;
 
-use Cake\ORM\Query;
+use Cake\Cache\Cache;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-use Cake\Cache\Cache;
 
 /**
  * Articles Model
+ *
+ * @property \CakeSilverCms\Model\Table\ArticleTranslationsTable|\Cake\ORM\Association\HasMany $ArticleTranslations
  *
  * @method \CakeSilverCms\Model\Entity\Article get($primaryKey, $options = [])
  * @method \CakeSilverCms\Model\Entity\Article newEntity($data = null, array $options = [])
@@ -34,6 +35,18 @@ class ArticlesTable extends Table
         $this->setTable('articles');
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
+
+        $this->belongsTo('ArticleTranslation', [
+            'foreignKey' => 'id',
+            'bindingKey' => 'article_id',
+            'joinType'   => 'LEFT',
+            'className'  => 'CakeSilverCms.ArticleTranslations',
+        ]);
+
+        $this->hasMany('ArticleTranslations', [
+            'foreignKey' => 'article_id',
+            'className'  => 'CakeSilverCms.ArticleTranslations',
+        ]);
     }
 
     /**
@@ -50,11 +63,10 @@ class ArticlesTable extends Table
         $validator
             ->scalar('title')
             ->requirePresence('title', 'create')
-            ->notEmpty('title','Title is required.');
+            ->notEmpty('title');
 
         $validator
             ->scalar('slug')
-            ->maxLength('slug', 255)
             ->allowEmpty('slug');
 
         $validator
@@ -65,17 +77,16 @@ class ArticlesTable extends Table
             ->scalar('content')
             ->maxLength('content', 4294967295)
             ->requirePresence('content', 'create')
-            ->notEmpty('content','Content is required.');
+            ->notEmpty('content');
 
         $validator
             ->scalar('url')
-            ->maxLength('url', 255)
-            ->allowEmpty('url')
-            ->add('url', 'unique', [
-                'rule' => 'validateUnique',
-                'provider' => 'table',
-                'message' => 'This url already exist. please use another url'
-            ]);
+            ->allowEmpty('url');
+
+        $validator
+            ->boolean('is_home')
+            ->requirePresence('is_home', 'create')
+            ->notEmpty('is_home');
 
         $validator
             ->integer('sort_order')
@@ -113,12 +124,23 @@ class ArticlesTable extends Table
 
     public function afterSave($event, $entity, $options = [])
     {
-        Cache::clearGroup('rewrite-rules','articles');
+        //$this->articleCache();
+    }
+
+    public function articleCache()
+    {
+        Cache::clearGroup('rewrite-rules', 'articles');
         $rewriteRules = $this->find('all')
-                            ->select(["id","title","slug","url"])
-                            ->where(['status'=>1,'url IS NOT NULL'])
-                            ->hydrate(false)
-                            ->toArray();
-        Cache::write('rewrite_rules',$rewriteRules,'articles');
+            ->select(["id", "title", "slug", "url"])
+            ->contain(['ArticleTranslations' => function ($q) {
+                $q->select(['article_id', 'language_id', 'culture', 'url']);
+                $q->where(['url IS NOT NULL', 'url !=' => '']);
+                return $q;
+            }])
+            ->where(['status' => 1])
+            ->hydrate(false)
+            ->toArray();
+        Cache::write('rewrite_rules', $rewriteRules, 'articles');
+        return $rewriteRules;
     }
 }

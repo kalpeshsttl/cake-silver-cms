@@ -47,6 +47,18 @@ class MenusTable extends Table
             'joinType' => 'LEFT',
             'className' => 'CakeSilverCms.Articles'
         ]);
+
+        $this->belongsTo('MenuTranslation', [
+            'foreignKey' => 'id',
+            'bindingKey' => 'menu_id',
+            'joinType' => 'LEFT',
+            'className' => 'CakeSilverCms.MenuTranslations'
+        ]);
+
+        $this->hasMany('MenuTranslations', [
+            'foreignKey' => 'menu_id',
+            'className' => 'CakeSilverCms.MenuTranslations'
+        ]);
     }
 
     /**
