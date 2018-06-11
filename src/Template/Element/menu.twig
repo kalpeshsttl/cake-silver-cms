@@ -1,0 +1,54 @@
+{% set controller = _view.request.params.controller %}
+{% set action = _view.request.params.action %}
+{% set menus = [
+		{
+			'title':'<i class="fa fa-tachometer-alt"></i><span class="nav-text">' ~ __('Dashboard') ~ '</span>',
+			'url':{'controller':'Dashboard', 'action':'index'},
+			'options':{'class':'nav-link ' ~ ( (controller matches '/Dashboard/') ? 'active' : ''), 'escape':false},
+		},
+		{
+			'title':'<i class="far fa-newspaper"></i><span class="nav-text">' ~ __('Articles') ~ '</span>',
+			'url':{'controller':'Articles', 'action':'index'},
+			'options':{'class':'nav-link ' ~ ( (controller matches '/Articles/') ? 'active' : ''), 'escape':false},
+			'submenu':[
+				{
+					'title':'<i class="far fa-edit"></i><span class="nav-text">' ~ __('Add New Article') ~ '</span>',
+					'url':{'controller':'Articles', 'action':'add'},
+					'options':{'class':'nav-link ' ~ ( ((controller matches '/Articles/') and (action matches '/add/')) ? 'active' : ''), 'escape':false},
+				},
+			],
+		},
+		{
+			'title':'<i class="fas fa-bars"></i><span class="nav-text">' ~ __('Menu') ~ '</span>',
+			'url':{'controller':'MenuRegions', 'action':'index'},
+			'options':{'class':'nav-link ' ~ ( (controller matches '/MenuRegions|Menus/') ? 'active' : ''), 'escape':false},
+			'submenu':[
+				{
+					'title':'<i class="fas fa-plus"></i><span class="nav-text">' ~ __('Add New Menu Region') ~ '</span>',
+					'url':{'controller':'MenuRegions', 'action':'add'},
+					'options':{'class':'nav-link ' ~ ( ((controller matches '/MenuRegions/') and (action matches '/add/')) ? 'active' : ''), 'escape':false},
+				},
+				{
+					'title':'<i class="fas fa-plus"></i><span class="nav-text">' ~ __('Add New Menu') ~ '</span>',
+					'url':{'controller':'Menus', 'action':'add'},
+					'options':{'class':'nav-link ' ~ ( ((controller matches '/Menus/') and (action matches '/add/')) ? 'active' : ''), 'escape':false},
+				},
+			],
+		},
+		{
+			'title':'<i class="fas fa-language"></i><span class="nav-text">' ~ __('Languages') ~ '</span>',
+			'url':{'controller':'Languages', 'action':'index'},
+			'options':{'class':'nav-link ' ~ ( (controller matches '/Languages/') ? 'active' : ''), 'escape':false},
+			'submenu':[
+				{
+					'title':'<i class="fas fa-plus"></i><span class="nav-text">' ~ __('Add New Language') ~ '</span>',
+					'url':{'controller':'Languages', 'action':'add'},
+					'options':{'class':'nav-link ' ~ ( ((controller matches '/Languages/') and (action matches '/add/')) ? 'active' : ''), 'escape':false},
+				},
+			],
+		}	
+	]
+%}
+<ul class="nav flex-column">
+	{{ _view.Menu.printMenu(menus)|raw }}
+</ul>
