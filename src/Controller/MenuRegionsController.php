@@ -52,11 +52,11 @@ class MenuRegionsController extends AppController
         if ($this->request->is('post')) {
             $menuRegion = $this->MenuRegions->patchEntity($menuRegion, $this->request->getData());
             if ($this->MenuRegions->save($menuRegion)) {
-                $this->Flash->success(__('The menu location has been saved.'));
+                $this->Flash->success(__('The menu region has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The menu location could not be saved. Please, try again.'));
+            $this->Flash->error(__('The menu region could not be saved. Please, try again.'));
         }
         $this->set(compact('menuRegion'));
     }
@@ -76,11 +76,11 @@ class MenuRegionsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $menuRegion = $this->MenuRegions->patchEntity($menuRegion, $this->request->getData());
             if ($this->MenuRegions->save($menuRegion)) {
-                $this->Flash->success(__('The menu location has been saved.'));
+                $this->Flash->success(__('The menu region has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The menu location could not be saved. Please, try again.'));
+            $this->Flash->error(__('The menu region could not be saved. Please, try again.'));
         }
         $this->set(compact('menuRegion'));
     }
@@ -97,9 +97,9 @@ class MenuRegionsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $menuRegion = $this->MenuRegions->get($id);
         if ($this->MenuRegions->delete($menuRegion)) {
-            $this->Flash->success(__('The menu location has been deleted.'));
+            $this->Flash->success(__('The menu region has been deleted.'));
         } else {
-            $this->Flash->error(__('The menu location could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The menu region could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);
