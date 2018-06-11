@@ -8,9 +8,9 @@ class FormHelper extends CakeFormHelper
 {
     private $templates = [
         'dateWidget'          => '<span class="form-inline">{{year}}{{month}}{{day}}{{hour}}{{minute}}{{second}}{{meridian}}</span>',
-        'error'               => '<div class="text-danger">{{content}}</div>',
+        'error'               => '<div class="sv-error text-danger">{{content}}</div>',
         'inputContainer'      => '<div class="form-group {{type}}{{required}}">{{content}}</div>',
-        'inputContainerError' => '<div class="form-group {{type}}{{required}} error">{{content}}{{error}}</div>',
+        'inputContainerError' => '<div class="form-group {{type}}{{required}} has-error">{{content}}{{error}}</div>',
         'checkboxContainer'   => '<div class="form-group {{type}}{{required}}">{{content}}</div>',
         'radioContainer'      => '<div class="form-group {{type}}{{required}}">{{content}}</div>',
         // Label element used for radio and multi-checkbox inputs.
@@ -19,6 +19,7 @@ class FormHelper extends CakeFormHelper
 
     private $templatesHorizontal = [
         'label'               => '<label class="control-label col-md-2"{{attrs}}>{{text}}</label>',
+        'error'               => '<div class="sv-error text-danger">{{content}}</div>',
         'formGroup'           => '{{label}}<div class=" col-md-10">{{input}}{{error}}{{help}}</div>',
         'checkboxFormGroup'   => '<div class="checkbox">{{label}}</div>{{error}}{{help}}',
         'submitContainer'     => '<div class="col-md-10 col-md-offset-2">{{content}}</div>',
