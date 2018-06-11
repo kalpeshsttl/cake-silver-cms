@@ -1,0 +1,109 @@
+{#
+/**
+ * @var \App\View\AppView $this
+ * @var \Cake\Datasource\EntityInterface $article
+ */
+#}
+{{ _view.assign('title', __('Edit Article ( ' ~ article.title ~ ' ) ')) }}
+{% do Html.addCrumb(__('Articles'), {'action':'index'}) %}
+{% do Html.addCrumb(__('Edit Article ( ' ~ article.title ~ ' ) ')) %}
+<div class="article edit form">
+    <div class="card">
+        <div class="page-header border-bottom border-dark mb-2 py-1">
+            <h1 class="h5 d-inline">{{ __('Edit Article  ( ' ~ article.title ~ ' ) ') }}</h1>
+            <div class="float-sm-right mt-2 mt-sm-0" role="group" aria-label="article nav">
+                {{ Html.link(
+                    '<i class="fa fa-arrow-circle-left"></i>',
+                    {'action':'index'},
+                    {'class':'btn btn-sm btn-outline-dark', 'title':__('Back to Articles'), 'escape':false}
+                )|raw }}
+                {{ Form.postLink(
+                    '<i class="far fa-trash-alt"></i>',
+                    {'action':'delete',0:article.id},
+                    {'confirm':__('Are you sure you want to delete this Article?', article.id), 'class':'btn btn-sm btn-outline-danger', 'title':__('Delete'), 'escape':false}
+                )|raw }}
+            </div>
+        </div>
+        <div class="card-body p-0">
+            {{ Form.create(article, {'id':'article-edit-frm'})|raw }}
+                <ul class="nav nav-tabs" id="articleTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#default-tab" role="tab" aria-controls="nav-default" aria-selected="true">{{ __("Default") }}</a>
+                    </li>
+                    {% if articleLanguages != false %}
+                        {% for articleLanguage in articleLanguages %}
+                            {% if articleLanguage.id != system_languge_id and articleLanguage.status == 1 %}
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#{{ articleLanguage.culture }}-tab" role="tab" aria-controls="nav-{{ articleLanguage.culture }}" aria-selected="true">{{ __(articleLanguage.name)|raw }}</a>
+                                    {{ Form.control('article_translations.' ~ articleLanguage.id ~ '.language_id', {'type':'hidden', 'value':articleLanguage.id})|raw }}
+                                    {{ Form.control('article_translations.' ~ articleLanguage.id ~ '.culture', {'type':'hidden', 'value':articleLanguage.culture})|raw }}
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+                <div class="tab-content" id="articleTabContent">
+                    <div class="tab-pane fade show active" id="default-tab" role="tabpanel" aria-labelledby="nav-default-tab">
+                        {{ Form.control('title', {'type':'text'})|raw }}
+                        {# {{ Form.control('slug',{'type':text'})|raw }} #}
+                        {# {{ Form.control('excerpt')|raw }} #}
+                        {{ Form.control('content', {'type':'text', 'class':'content-editor'})|raw }}
+                        {{ Form.control('url', {'type':'text'})|raw }}
+                    </div>
+                    {% if articleLanguages != false %}
+                        {% for articleLanguage in articleLanguages %}
+                            {% if articleLanguage.id != system_languge_id and articleLanguage.status == 1 %}
+                                <div class="tab-pane fade" id="{{ articleLanguage.culture }}-tab" role="tabpanel" aria-labelledby="nav-{{ articleLanguage.culture }}-tab">
+                                    {{ Form.control('article_translations.' ~ articleLanguage.id ~ '.title', {'type':'text', 'dir':articleLanguage.direction})|raw }}
+                                    {# {{ Form.control('article_translations.' ~ articleLanguage.id ~ '.slug',{'type':text','dir':articleLanguage.direction})|raw }} #}
+                                    {# {{ Form.control('article_translations.' ~ articleLanguage.id ~ '.excerpt',{'dir':articleLanguage.direction})|raw }} #}
+                                    {{ Form.control('article_translations.' ~ articleLanguage.id ~ '.content', {'class':'content-editor', 'dir':articleLanguage.direction})|raw }}
+                                    {{ Form.control('article_translations.' ~ articleLanguage.id ~ '.url', {'type':'text', 'dir':articleLanguage.direction})|raw }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                {{ Form.control('is_home', {'label':__('Home Page')})|raw }}
+                {# {{ Form.control('sort_order')|raw }} #}
+                {{ Form.control('status')|raw }}
+                {# {{ Form.control('created_at')|raw }} #}
+                {# {{ Form.control('modified_at')|raw }} #}
+                {{ Form.button(__('Submit'), {'class':'btn btn-sm btn-outline-primary'})|raw }}
+                {{ Html.link(__('Cancel'), {'action':'index'}, {'class':'btn btn-sm btn-outline-dark ml-1'})|raw }}
+            {{ Form.end()|raw }}
+        </div>
+    </div>
+</div>
+{{ Html.css(['CakeSilverCms.editor/editor.css'], {'block':'head-style'}) }}
+{{ Html.script(['CakeSilverCms.editor/editor.js'], {'block':'bottom-script'}) }}
+{{ _view.append('bottom-script') }}
+<script>
+(function($){
+    $(document).ready(function(){
+        $('.content-editor').each(function($_index,$_content){
+            $($_content).Editor();
+            $($_content).Editor("setText",$($_content).val());
+        });
+        if(typeof $.validator !== "undefined"){
+            $("#article-edit-frm").validate({
+                rules:{
+                    'content':{
+                        required: function(element) {
+                            $(element).val($(element).Editor("getText"));
+                            return ($(element).val() == '') ? true : false;
+                        }
+                    }
+                },
+                submitHandler: function(form) {
+                    $('.content-editor').each(function($_index,$_content){
+                        $($_content).val($($_content).Editor("getText"));
+                    });
+                    return true;
+                }
+            });
+        }
+    });
+})($);
+</script>
+{{ _view.end() }}

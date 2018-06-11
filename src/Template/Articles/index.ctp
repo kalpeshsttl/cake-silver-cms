@@ -3,8 +3,6 @@
  * @var \App\View\AppView $this
  * @var \Cake\Datasource\EntityInterface[]|\Cake\Collection\CollectionInterface $articles
  */
-use Cake\Routing\Router;
-
 $this->assign('title',__('Articles'));
 $this->Html->addCrumb(__('Articles'));
 ?>
@@ -25,16 +23,17 @@ $this->Html->addCrumb(__('Articles'));
                 <thead class="thead-light">
                     <tr>
                         <th scope="col" width="8%"><?=$this->Paginator->sort('id', __('#ID'))?></th>
-                        <th scope="col" width="40%"><?=$this->Paginator->sort('title', __('Title'))?></th>
+                        <th scope="col" width="35%"><?=$this->Paginator->sort('title', __('Title'))?></th>
                         <?php /*<th scope="col"><?=$this->Paginator->sort('slug')?></th>*/?>
                         <?php /*<th scope="col"><?=$this->Paginator->sort('excerpt')?></th>*/?>
                         <?php /*<th scope="col"><?=$this->Paginator->sort('content')?></th>*/?>
-                        <th scope="col" width="25%"><?=$this->Paginator->sort('url', __('Url'))?></th>
+                        <th scope="col" width="22%"><?=__('Url')?></th>
+                        <th scope="col" width="12%"><?= $this->Paginator->sort('is_home',__('Home Page')) ?></th>
                         <?php /*<th scope="col"><?=$this->Paginator->sort('sort_order')?></th>*/?>
-                        <th scope="col" width="10%"><?=$this->Paginator->sort('status', __('Status'))?></th>
+                        <th scope="col" width="8%"><?=$this->Paginator->sort('status', __('Status'))?></th>
                         <?php /*<th scope="col"><?=$this->Paginator->sort('created_at')?></th>*/?>
                         <?php /*<th scope="col"><?=$this->Paginator->sort('modified_at')?></th>*/?>
-                        <th scope="col" class="actions" width="17%"><?=__('Actions')?></th>
+                        <th scope="col" class="actions" width="15%"><?=__('Actions')?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,14 +45,16 @@ $this->Html->addCrumb(__('Articles'));
                         <?php /*<td><?=h($article->excerpt)?></td> */?>
                         <?php /*<td><?=h($article->content)?></td>*/?>
                         <?php
-                        $link = '';
-                        if (!empty($article->url)):
-                            $link = Router::url(['action' => 'page', 'id' => $article->id], ['pass' => ['id'], '_full' => true]);
-                        else:
-                            $link = Router::url('/page/' . $article->id, ['_full' => true]);
-                        endif;
+                        $lOption = [
+                            'plugin'     => 'CakeSilverCms',
+                            'controller' => 'Articles',
+                            'action'     => 'page',
+                            'id'         => $article->id,
+                        ];
+                        $link = $this->Url->build($lOption, ['pass' => ['id'], 'fullBase' => true]);
                         ?>
                         <td><?=$this->Html->link($link, $link, ['target' => '_blank']);?></td>
+                        <td><?= ($article->is_home == 1) ? __('Yes') : __('No')?></td>
                         <?php /*<td><?=$this->Number->format($article->sort_order)?></td>*/?>
                         <td><?=($article->status == 1) ? __('Active') : __('Inactive');?></td>
                         <?php /*<td><?=h($article->created_at)?></td>*/?>

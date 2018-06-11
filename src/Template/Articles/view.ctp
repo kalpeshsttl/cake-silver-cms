@@ -40,14 +40,17 @@ $this->Html->addCrumb(__('Article ( ' . $article->title . ' ) '));
                 <dd class="col-sm-9 col-lg-10 mb-1"><?= h($article->slug) ?></dd>*/ ?>
                 <dt class="col-sm-3 col-lg-2 mb-1"><?= __('Url') ?></dt>
                 <?php
-                $link = '';
-                if (!empty($article->url)):
-                    $link = Router::url(['action' => 'page', 'id' => $article->id], ['pass' => ['id'], '_full' => true]);
-                else:
-                    $link = Router::url('/page/' . $article->id, ['_full' => true]);
-                endif;
+                $lOption = [
+                    'plugin'     => 'CakeSilverCms',
+                    'controller' => 'Articles',
+                    'action'     => 'page',
+                    'id'         => $article->id,
+                ];
+                $link = Router::url($lOption, ['pass' => ['id'], '_full' => true]);
                 ?>
-                <dd class="col-sm-9 col-lg-10 mb-1"><?=$this->Html->link($link, $link, ['target' => '_blank']);?></dd>                
+                <dd class="col-sm-9 col-lg-10 mb-1"><?=$this->Html->link($link, $link, ['target' => '_blank']);?></dd>
+                <dt class="col-sm-3 col-lg-2 mb-1"><?= __('Home Page') ?></dt>
+                <dd class="col-sm-9 col-lg-10 mb-1"><?= ($article->is_home == 1) ? __('Yes') : __('No'); ?></dd>                
                 <?php /*<dt class="col-sm-3 col-lg-2 mb-1"><?= __('Sort Order') ?></dt>
                 <dd class="col-sm-9 col-lg-10 mb-1"><?= $this->Number->format($article->sort_order) ?></dd>
                 <dt class="col-sm-3 col-lg-2 mb-1"><?= __('Created At') ?></dt>

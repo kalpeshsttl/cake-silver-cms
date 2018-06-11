@@ -1,0 +1,86 @@
+{#
+/**
+ * @var \App\View\AppView $this
+ * @var \Cake\Datasource\EntityInterface[]|\Cake\Collection\CollectionInterface $articles
+ */
+#}
+{{ _view.assign('title',__('Articles')) }}
+{% do Html.addCrumb(__('Articles')) %}
+<div class="article index">
+    <div class="card">
+        <div class="page-header border-bottom border-dark mb-2 py-1">
+            <h1 class="h5 d-inline">{{ __('Articles') }}</h1>
+            <div class="float-sm-right mt-2 mt-sm-0" role="group" aria-label="article nav">
+                {{ Html.link(
+                    __('Add New Article'),
+                    {'action':'add'},
+                    {'class':'btn btn-sm btn-outline-dark', 'title':__('Add New Article')}
+                )|raw }}
+            </div>
+        </div>
+        <div class="table-responsive mb-2">
+            <table class="table table-hover table-bordered mb-0">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col" width="8%">{{ _view.Paginator.sort('id', __('#ID'))|raw }}</th>
+                        <th scope="col" width="35%">{{ _view.Paginator.sort('title', __('Title'))|raw }}</th>
+                        {# <th scope="col">{{ _view.Paginator.sort('slug')|raw }}</th> #}
+                        {# <th scope="col">{{ _view.Paginator.sort('excerpt')|raw }}</th> #}
+                        {# <th scope="col">{{ _view.Paginator.sort('content')|raw }}</th> #}
+                        <th scope="col" width="22%">{{ __('Url') }}</th>
+                        <th scope="col" width="12%">{{ _view.Paginator.sort('is_home',__('Home Page'))|raw }}</th>
+                        {# <th scope="col">{{ _view.Paginator.sort('sort_order')|raw }}</th> #}
+                        <th scope="col" width="8%">{{ _view.Paginator.sort('status', __('Status'))|raw }}</th>
+                        {# <th scope="col">{{ _view.Paginator.sort('created_at')|raw }}</th> #}
+                        {# <th scope="col">{{ _view.Paginator.sort('modified_at')|raw }}</th> #}
+                        <th scope="col" class="actions" width="15%">{{ __('Actions')|raw }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for article in articles %}
+                    <tr>
+                        <td>{{ article.id|raw }}</td>
+                        <td>{{ article.title|raw }}</td>
+                        {# <td>{{ article.slug|raw }}</td> #}
+                        {# <td>{{ article.excerpt|raw }}</td>  #}
+                        {# <td>{{ article.content|raw }}</td> #}
+                        {% set linkOption = {
+                                'plugin':'CakeSilverCms',
+                                'controller': 'Articles',
+                                'action'    : 'page',
+                                'id'        : article.id,
+                            } %}
+                        {% set link = _view.Url.build(linkOption, {'pass':['id'], 'fullBase':true}) %}
+                        <td>{{ Html.link(link, link, {'target':'_blank'})|raw }}</td>
+                        <td>{{  (article.is_home == 1) ? __('Yes') : __('No')|raw }}</td>
+                        {# <td>{{ article.sort_order|raw }}</td> #}
+                        <td>{{ (article.status == 1) ? __('Active') : __('Inactive')|raw }}</td>
+                        {# <td>{{ article.created_at|raw }}</td> #}
+                        {# <td>{{ article.modified_at|raw }}</td> #}
+                        <td class="actions">
+                            {{ Html.link('<i class="fas fa-eye"></i>', {'action':'view', 0:article.id}, {'class':'btn btn-sm btn-outline-dark', 'title':__('View'), 'escape':false})|raw }}
+                            {{ Html.link('<i class="far fa-edit"></i>', {'action':'edit', 0:article.id}, {'class':'btn btn-sm btn-outline-dark', 'title':__('Edit'), 'escape':false})|raw }}
+                            {{ Form.postLink('<i class="far fa-trash-alt"></i>', {'action':'delete', 0:article.id}, {'confirm':__('Are you sure you want to delete this Article?', article.id), 'class':'btn btn-sm btn-outline-danger', 'title':__('Delete'), 'escape':false})|raw }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% if articles|length == 0 %}
+                    <tr>
+                        <td colspan="6">{{ __('Record not found!')|raw }}</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <div class="paginator">
+            <!-- <p>{{ _view.Paginator.counter({'format':__('Page  of , showing  record(s) out of  total')})|raw }}</p> -->
+            <ul class="pagination my-2">
+                {{ _view.Paginator.first('<<')|raw }}
+                {{ _view.Paginator.prev('<')|raw }}
+                {{ _view.Paginator.numbers()|raw }}
+                {{ _view.Paginator.next('>')|raw }}
+                {{ _view.Paginator.last('>>')|raw }}
+            </ul>
+        </div>
+    </div>
+</div>
