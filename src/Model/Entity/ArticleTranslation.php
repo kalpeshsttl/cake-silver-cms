@@ -5,24 +5,21 @@ use Cake\ORM\Entity;
 use Cake\Utility\Text;
 
 /**
- * Article Entity
+ * ArticleTranslation Entity
  *
- * @property int $id
+ * @property int $article_id
+ * @property int $language_id
+ * @property string $culture
  * @property string $title
  * @property string $slug
  * @property string $excerpt
  * @property string $content
  * @property string $url
- * @property bool $is_home
- * @property int $sort_order
- * @property bool $status
- * @property \Cake\I18n\FrozenTime $created_at
- * @property \Cake\I18n\FrozenTime $modified_at
  *
- * @property \CakeSilverCms\Model\Entity\ArticleTranslation $article_translation
- * @property \CakeSilverCms\Model\Entity\ArticleTranslation[] $article_translations
+ * @property \CakeSilverCms\Model\Entity\Article $article
+ * @property \CakeSilverCms\Model\Entity\Language $language
  */
-class Article extends Entity
+class ArticleTranslation extends Entity
 {
 
     /**
@@ -35,18 +32,14 @@ class Article extends Entity
      * @var array
      */
     protected $_accessible = [
+        'culture' => true,
         'title' => true,
         'slug' => true,
         'excerpt' => true,
         'content' => true,
         'url' => true,
-        'is_home' => true,
-        'sort_order' => true,
-        'status' => true,
-        'created_at' => true,
-        'modified_at' => true,
-        'article_translation' => true,
-        'article_translations' => true
+        'article' => true,
+        'language' => true
     ];
 
     /*
@@ -59,6 +52,7 @@ class Article extends Entity
             return null;
         }
     }
+
     protected function _setSlug($slug)
     {
         $slug = trim($slug);
@@ -70,7 +64,7 @@ class Article extends Entity
     }
     */
 
-    protected function _getUrl($url)
+    /*protected function _getUrl($url)
     {
         $url = trim($url);
         if (!empty($url)) {
@@ -79,6 +73,7 @@ class Article extends Entity
             return null;
         }
     }
+    
     protected function _setUrl($url)
     {
         $url = trim($url);
@@ -87,5 +82,5 @@ class Article extends Entity
         } else {
             return null;
         }
-    }
+    }*/
 }
