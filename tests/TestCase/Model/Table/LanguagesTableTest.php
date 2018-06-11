@@ -1,22 +1,22 @@
 <?php
 namespace CakeSilverCms\Test\TestCase\Model\Table;
 
-use CakeSilverCms\Model\Table\ArticlesTable;
+use CakeSilverCms\Model\Table\LanguagesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * CakeSilverCms\Model\Table\ArticlesTable Test Case
+ * CakeSilverCms\Model\Table\LanguagesTable Test Case
  */
-class ArticlesTableTest extends TestCase
+class LanguagesTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \CakeSilverCms\Model\Table\ArticlesTable
+     * @var \CakeSilverCms\Model\Table\LanguagesTable
      */
-    public $Articles;
+    public $Languages;
 
     /**
      * Fixtures
@@ -24,9 +24,7 @@ class ArticlesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.cake_silver_cms.articles',
-        'plugin.cake_silver_cms.article_translation',
-        'plugin.cake_silver_cms.article_translations'
+        'plugin.cake_silver_cms.languages'
     ];
 
     /**
@@ -37,8 +35,8 @@ class ArticlesTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('Articles') ? [] : ['className' => ArticlesTable::class];
-        $this->Articles = TableRegistry::get('Articles', $config);
+        $config = TableRegistry::exists('Languages') ? [] : ['className' => LanguagesTable::class];
+        $this->Languages = TableRegistry::get('Languages', $config);
     }
 
     /**
@@ -48,7 +46,7 @@ class ArticlesTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Articles);
+        unset($this->Languages);
 
         parent::tearDown();
     }
@@ -89,16 +87,6 @@ class ArticlesTableTest extends TestCase
      * @return void
      */
     public function testAfterSave()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test articleCache method
-     *
-     * @return void
-     */
-    public function testArticleCache()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

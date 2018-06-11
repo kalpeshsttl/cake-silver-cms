@@ -1,22 +1,22 @@
 <?php
 namespace CakeSilverCms\Test\TestCase\Model\Table;
 
-use CakeSilverCms\Model\Table\ArticlesTable;
+use CakeSilverCms\Model\Table\MenuTranslationsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * CakeSilverCms\Model\Table\ArticlesTable Test Case
+ * CakeSilverCms\Model\Table\MenuTranslationsTable Test Case
  */
-class ArticlesTableTest extends TestCase
+class MenuTranslationsTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \CakeSilverCms\Model\Table\ArticlesTable
+     * @var \CakeSilverCms\Model\Table\MenuTranslationsTable
      */
-    public $Articles;
+    public $MenuTranslations;
 
     /**
      * Fixtures
@@ -24,9 +24,9 @@ class ArticlesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.cake_silver_cms.articles',
-        'plugin.cake_silver_cms.article_translation',
-        'plugin.cake_silver_cms.article_translations'
+        'plugin.cake_silver_cms.menu_translations',
+        'plugin.cake_silver_cms.menus',
+        'plugin.cake_silver_cms.languages'
     ];
 
     /**
@@ -37,8 +37,8 @@ class ArticlesTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('Articles') ? [] : ['className' => ArticlesTable::class];
-        $this->Articles = TableRegistry::get('Articles', $config);
+        $config = TableRegistry::exists('MenuTranslations') ? [] : ['className' => MenuTranslationsTable::class];
+        $this->MenuTranslations = TableRegistry::get('MenuTranslations', $config);
     }
 
     /**
@@ -48,7 +48,7 @@ class ArticlesTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Articles);
+        unset($this->MenuTranslations);
 
         parent::tearDown();
     }
@@ -79,26 +79,6 @@ class ArticlesTableTest extends TestCase
      * @return void
      */
     public function testBuildRules()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test afterSave method
-     *
-     * @return void
-     */
-    public function testAfterSave()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test articleCache method
-     *
-     * @return void
-     */
-    public function testArticleCache()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
