@@ -3,21 +3,19 @@
  * @var \App\View\AppView $this
  * @var \Cake\Datasource\EntityInterface[]|\Cake\Collection\CollectionInterface $menus
  */
-use Cake\Routing\Router;
-
-$this->assign('title',__('Menus'));
-$this->Html->addCrumb(__('Menu Locations'),['controller' => 'MenuRegions', 'action' => 'index']);
-$this->Html->addCrumb(__('Menus'));
+$this->assign('title',__('Menu'));
+$this->Html->addCrumb(__('Menu'),['controller' => 'MenuRegions', 'action' => 'index']);
+$this->Html->addCrumb(__('List'));
 ?>
 <div class="menu index">
     <div class="card">
         <div class="page-header border-bottom border-dark mb-2 py-1">
-            <h1 class="h5 d-inline"><?= __('Menus') ?></h1>
+            <h1 class="h5 d-inline"><?= __('Menu') ?></h1>
             <div class="float-sm-right mt-2 mt-sm-0" role="group" aria-label="menu nav">
                 <?=$this->Html->link(
                     '<i class="fa fa-arrow-circle-left"></i>',
                     ['controller' => 'MenuRegions', 'action' => 'index'],
-                    ['class' => 'btn btn-sm btn-outline-dark','title' => __('Back to Menu Locations'),'escape' => false]
+                    ['class' => 'btn btn-sm btn-outline-dark','title' => __('Back to Menu Regions'),'escape' => false]
                 );?>
                 <?=$this->Html->link(
                     __('Add New Menu'),
@@ -56,16 +54,13 @@ $this->Html->addCrumb(__('Menus'));
                         <?php
                         $link = '';
                         if($menu->object_type == 'article' && $menu->has('article')):
-                            $link = '';
-                            if (!empty($menu->article->url)):
-                                $link = Router::url([
-                                    'plugin'     => 'CakeSilverCms',
-                                    'controller' => 'Articles',
-                                    'action'     => 'page',
-                                    'id' => $menu->article->id ], ['pass' => ['id'], '_full' => true]);
-                            else:
-                                $link = Router::url('/page/' . $menu->article->id, ['_full' => true]);
-                            endif;
+                            $lOption = [
+                                'plugin'     => 'CakeSilverCms',
+                                'controller' => 'Articles',
+                                'action'     => 'page',
+                                'id'         => $menu->article->id,
+                            ];
+                            $link = $this->Url->build($lOption, ['pass' => ['id'], 'fullBase' => true]);
                         endif;
                         ?>
                         <td><?= (!empty($link)) ? $this->Html->link($link, $link, ['target' => '_blank']) : '';?></td>
