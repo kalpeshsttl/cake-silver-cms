@@ -12,9 +12,17 @@
  * @since         0.10.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+
+$lang = 'en';
+$dir = 'ltr';
+if($Configure::check('language')){
+    $lang = $Configure::read('language.culture');
+    $dir = $Configure::read('language.direction');
+}
+
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?=$lang;?>" lang="<?=$lang;?>" dir="<?=$dir;?>">
     <head>
         <?=$this->Html->charset()?>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">

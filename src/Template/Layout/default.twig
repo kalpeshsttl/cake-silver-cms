@@ -1,0 +1,87 @@
+{#
+/**
+ * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * @link          https://cakephp.org CakePHP(tm) Project
+ * @since         0.10.0
+ * @license       https://opensource.org/licenses/mit-license.php MIT License
+ */
+#}
+{% spaceless %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+    <head>
+        {{ Html.charset()|raw }}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ _view.fetch('title')|raw }}</title>
+        {{ Html.meta('icon')|raw }}
+        {{ _view.fetch('meta')|raw }}
+        <!-- head style -->
+        {{ Html.css([
+            'CakeSilverCms.fontawesome/fontawesome-all.min.css',
+            'CakeSilverCms.bootstrap/bootstrap.min.css',
+            'CakeSilverCms.style.css',
+        ])|raw }}
+        {{  _view.fetch('head-style')|raw }}
+        <!-- /head style -->
+        <!-- head script -->
+        {{ Html.script([])|raw }}
+        {{ _view.fetch('head-script')|raw }}
+        <!-- /head script -->
+    </head>
+    <body>
+        {{ Flash.render()|raw }}
+        {% element 'CakeSilverCms.header' %}
+        <div class="container-fluid">
+            <div class="row navbar-expand-md">
+                <div class="col-md-3 col-lg-2 bg-light sidebar collapse navbar-collapse mr-auto" id="sidebar">
+                    <!-- sidebar -->
+                    {% element 'CakeSilverCms.sidebar' %}
+                    <!-- /sidebar -->
+                </div>
+                <main role="main" class="col-md-9 col-lg-10 ml-sm-auto p-0">
+                    <!-- breadcrumb -->
+                    {% element 'CakeSilverCms.breadcrumb' %}
+                    <!-- /breadcrumb -->
+                    <div class="pt-3 px-4">
+                        <div class="justify-content-between pb-2 mb-3">
+                            <!-- content top -->
+                            {{ _view.fetch('content-top')|raw }}
+                            <!-- /content top -->
+                            <!-- content -->
+                            {{ _view.fetch('content')|raw }}
+                            <!-- /content -->
+                            <!-- content bottom -->
+                            {{ _view.fetch('content-bottom')|raw }}
+                            <!-- /content bottom -->
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        {% element 'CakeSilverCms.footer' %}
+        <!-- bottom style -->
+        {{ _view.fetch('bottom-style')|raw }}
+        <!-- /bottom style -->
+        <!-- bottom script -->
+        {{ Html.script([
+            'CakeSilverCms.jquery-2.1.4.min.js',
+            'CakeSilverCms.bootstrap/popper.min.js',
+            'CakeSilverCms.bootstrap/bootstrap.min.js',
+            'CakeSilverCms.bootstrap/bootstrap.bundle.min.js',
+            'CakeSilverCms.underscore-min.js',
+            'CakeSilverCms.jqueryvalidate/jquery.validate.min.js',
+            'CakeSilverCms.jqueryvalidate/additional-methods.min.js',
+            'CakeSilverCms.main.js'
+        ])|raw }}
+        {{ _view.fetch('bottom-script')|raw }}
+        <!-- /bottom script -->
+    </body>
+</html>
+{% endspaceless %}
