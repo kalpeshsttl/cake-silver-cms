@@ -15,6 +15,7 @@ namespace CakeSilverCms\View;
 
 use \App\View\AppView as BaseAppView;
 use \Cake\Core\App;
+use WyriHaximus\TwigView\View\TwigView as BaseTwigView;
 //use Cake\View\View;
 
 /**
@@ -24,7 +25,7 @@ use \Cake\Core\App;
  *
  * @link https://book.cakephp.org/3.0/en/views.html#the-app-view
  */
-class AppView extends BaseAppView
+class TwigView extends BaseTwigView
 {
 
     /**
@@ -39,6 +40,7 @@ class AppView extends BaseAppView
     public function initialize()
     {
         parent::initialize();
+        $this->loadHelper('Html');
         $this->loadHelper('CakeSilverCms.Form');
         $this->loadHelper('CakeSilverCms.Menu');
         $this->loadHelper('Paginator', ['templates' => 'CakeSilverCms.templates/paginator']);
