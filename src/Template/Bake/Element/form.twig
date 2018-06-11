@@ -1,1 +1,87 @@
-
+{#
+/**
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @since         2.0.0
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
+#}
+{% set fields = Bake.filterFields(fields, schema, modelObject) %}
+<div class="{{ singularVar }} {{ action }} form">
+    <div class="card">
+        <div class="page-header border-bottom border-dark mb-2 py-1">
+{% if strpos(action, 'add') is same as(false) %}
+            <h1 class="h5 d-inline"><?= __('Edit {{ singularHumanName }}  ( ' . ${{ singularVar }}->{{ displayField }} .' ) ') ?></h1>
+{% else %}
+            <h1 class="h5 d-inline"><?= __('Add New {{ singularHumanName }}') ?></h1>
+{% endif %}
+            <div class="float-sm-right mt-2 mt-sm-0" role="group" aria-label="{{ singularVar }} nav">
+                <?=$this->Html->link(
+                    '<i class="fa fa-arrow-circle-left"></i>',
+                    ['action' => 'index'],
+                    ['class' => 'btn btn-sm btn-outline-dark','title' => __('Back to {{ pluralHumanName }}'),'escape' => false]
+                );?>
+{% if strpos(action, 'add') is same as(false) %}
+                <?= $this->Form->postLink(
+                    '<i class="far fa-trash-alt"></i>',
+                    ['action' => 'delete', ${{ singularVar }}->{{ primaryKey[0] }}],
+                    ['confirm' => __('Are you sure you want to delete this {{ singularHumanName }}?', ${{ singularVar }}->{{ primaryKey[0] }}),'class' => 'btn btn-sm btn-outline-danger','title' => __('Delete'),'escape' => false]
+                )?>
+{% endif %}
+            </div>
+        </div>
+        <div class="card-body p-0">
+        <?php
+            echo $this->Form->create(${{ singularVar }},['id' => '{{ singularVar }}-{{ action }}-frm']);
+{% for field in fields if field not in primaryKey %}
+    {%- if keyFields[field] %}
+        {%- set fieldData = Bake.columnData(field, schema) %}
+        {%- if fieldData.null %}
+            echo $this->Form->control('{{ field }}', ['options' => ${{ keyFields[field] }}, 'empty' => true]);
+            {{- "\n" }}
+        {%- else %}
+            echo $this->Form->control('{{ field }}', ['options' => ${{ keyFields[field] }}]);
+            {{- "\n" }}
+        {%- endif %}
+    {%- elseif field not in ['created', 'modified', 'updated'] %}
+        {%- set fieldData = Bake.columnData(field, schema) %}
+        {%- if fieldData.type in ['date', 'datetime', 'time'] and fieldData.null %}
+            echo $this->Form->control('{{ field }}', ['empty' => true]);
+            {{- "\n" }}
+        {%- else %}
+            echo $this->Form->control('{{ field }}');
+    {{- "\n" }}
+        {%- endif %}
+    {%- endif %}
+{%- endfor %}
+{%- if associations.BelongsToMany %}
+    {%- for assocName, assocData in associations.BelongsToMany %}
+            echo $this->Form->control('{{ assocData.property }}._ids', ['options' => ${{ assocData.variable }}]);
+    {{- "\n" }}
+    {%- endfor %}
+{% endif %}
+            echo $this->Form->button(__('Submit'),['class' => 'btn btn-sm btn-outline-primary']);
+            echo $this->Html->link(__('Cancel'),['action' => 'index'],['class' => 'btn btn-sm btn-outline-dark ml-1']);
+            echo $this->Form->end();
+        ?>
+        </div>
+    </div>
+</div>
+<?php $this->append('bottom-script');?>
+<script>
+(function($){
+    $(document).ready(function(){
+        if(typeof $.validator !== "undefined"){
+            $("#{{ singularVar }}-{{ action }}-frm").validate();
+        }
+    });
+})($);
+</script>
+<?php $this->end(); ?>
